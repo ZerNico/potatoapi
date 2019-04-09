@@ -22,7 +22,11 @@ class ModelTests(TestCase):
     def test_new_user_email_normalized(self):
         """Test the email for a new user is normalized"""
         email = 'test@potatoproject.co'
-        user = get_user_model().objects.create_user('ZerNico', email, 'test123')
+        user = get_user_model().objects.create_user(
+            'ZerNico',
+            email,
+            'test123'
+        )
 
         self.assertEqual(user.email, email.lower())
 
@@ -34,7 +38,11 @@ class ModelTests(TestCase):
     def test_new_user_invalid_username(self):
         """Test creating user with no username raises error"""
         with self.assertRaises(ValueError):
-            get_user_model().objects.create_user(None, 'test@potatoproject.co', 'test123')
+            get_user_model().objects.create_user(
+                None,
+                'test@potatoproject.co',
+                'test123'
+            )
 
     def test_new_superuser(self):
         """Test creating a new superuser"""
