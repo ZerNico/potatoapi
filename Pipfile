@@ -11,6 +11,5 @@ django = "==2.1.8"
 djangorestframework = "==3.8.2"
 djongo = "*"
 
-
 [requires]
 python_version = "3.7"
