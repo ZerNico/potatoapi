@@ -1,14 +1,13 @@
-from rest_framework.permissions import BasePermission
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
-class UserPermission(BasePermission):
+class RecipePermission(BasePermission):
     """Only allow staff to interact with the db"""
     def has_permission(self, request, view):
-        if view.action in ['list', 'retrieve']:
+
+        if request.method in SAFE_METHODS:
             return True
-        elif view.action in ['create', 'update', 'partial_update', 'destroy']:
+        else:
             return request.user.is_authenticated and \
                    request.user.is_staff and \
                    request.user.is_active
-        else:
-            return False
