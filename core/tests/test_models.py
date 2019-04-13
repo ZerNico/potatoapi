@@ -105,3 +105,13 @@ class ModelTests(TestCase):
 
         exp_path = f'uploads/recipe/{uuid}.jpg'
         self.assertEqual(file_path, exp_path)
+
+    def test_post_str(self):
+        """Test the post string representation"""
+        post = models.Post.objects.create(
+            user=sample_user(),
+            title='I love POSP',
+            body='it truly is great'
+        )
+
+        self.assertEqual(str(post), post.title)

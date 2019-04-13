@@ -14,6 +14,14 @@ def recipe_image_file_path(instance, filename):
     return os.path.join('uploads/recipe/', filename)
 
 
+def post_image_file_path(instance, filename):
+    """Generate file path for new post image"""
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('uploads/post/', filename)
+
+
 class UserManager(BaseUserManager):
 
     def create_user(self, username, email, password=None, **extra_fields):
@@ -96,6 +104,22 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField('Ingredient')
     tags = models.ManyToManyField('Tag')
     image = models.ImageField(null=True, upload_to=recipe_image_file_path)
+
+    def __str__(self):
+        return self.title
+
+
+class Post(models.Model):
+    """Post object"""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    title = models.CharField(max_length=255)
+    body = models.TextField(max_length=2000)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+    image = models.ImageField(null=True, upload_to=post_image_file_path)
 
     def __str__(self):
         return self.title
