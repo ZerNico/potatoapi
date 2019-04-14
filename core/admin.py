@@ -33,8 +33,19 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
+class PostAdmin(admin.ModelAdmin):
+    list_display = ['title', 'user', 'created_date', 'modified_date']
+    list_filter = ['created_date', ]
+    search_fields = ['title', ]
+
+    list_select_related = (
+        'user',
+    )
+
+
+admin.site.site_header = 'PotatoAPI'
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.Tag)
 admin.site.register(models.Ingredient)
 admin.site.register(models.Recipe)
-admin.site.register(models.Post)
+admin.site.register(models.Post, PostAdmin)

@@ -125,5 +125,6 @@ dmypy.json
 # PyCharm
 .idea/
 
-# Media
+# Django files
 media/
+static/
