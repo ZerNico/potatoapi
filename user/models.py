@@ -1,7 +1,11 @@
 import uuid
 import os
+import sys
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from PIL import Image
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 def user_image_file_path(instance, filename):
@@ -18,3 +22,26 @@ class User(AbstractUser):
     country = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     image = models.ImageField(null=True, upload_to=user_image_file_path)
+
+    def save(self):
+        """Resize image, reduce quality and make it a square"""
+        previous = User.objects.filter(id=self.id).first()
+        if not previous and self.image or self.image != previous.image:
+            res = 1024
+            ext = self.image.name.split('.')[-1]
+            im = Image.open(self.image)
+            output = BytesIO()
+
+            if (im.width or im.height) < 1024:
+                res = min(im.width, im.height)
+
+            if ext != 'jpg' or 'jpeg':
+                im = im.convert('RGB')
+
+            im = im.resize((res, res))
+            im.save(output, format='JPEG', quality=70)
+            output.seek(0)
+            self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
+                                              'image/jpeg', sys.getsizeof(output), None)
+
+        super(User, self).save()
