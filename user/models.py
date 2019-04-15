@@ -3,9 +3,9 @@ import os
 import sys
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from PIL import Image
-from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from io import BytesIO
+from PIL import Image
 
 
 def user_image_file_path(instance, filename):
@@ -41,7 +41,8 @@ class User(AbstractUser):
             im = im.resize((res, res))
             im.save(output, format='JPEG', quality=70)
             output.seek(0)
-            self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
-                                              'image/jpeg', sys.getsizeof(output), None)
+            self.image = InMemoryUploadedFile(
+                output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
+                'image/jpeg', sys.getsizeof(output), None)
 
         super(User, self).save()

@@ -11,5 +11,6 @@ urlpatterns = [
     path('me/upload-image/', views.ManageUserImageView.as_view(), name='me'),
     path('profile/', views.UserProfileView.as_view(), name='me'),
     path('profile/<pk>/', views.UserProfileDetailView.as_view(), name='me'),
-    path('profile/<pk>/upload-image/', views.UserProfileImageView.as_view(), name='me'),
+    path('profile/<pk>/upload-image/', views.UserProfileImageView.as_view(),
+         name='me'),
 ]
