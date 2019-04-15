@@ -3,7 +3,8 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
 
 from .serializers import UserSerializer, AuthTokenSerializer, \
-    UserProfileSerializer, UserProfileDetailSerializer, UserManageSerializer
+    UserProfileSerializer, UserProfileDetailSerializer, UserManageSerializer, \
+    UserImageSerializer
 from .models import User
 from .permissions import UserPermissions
 
@@ -19,9 +20,20 @@ class CreateTokenView(ObtainAuthToken):
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
 
-class ManageUserView(generics.RetrieveUpdateAPIView):
+class ManageUserView(generics.RetrieveUpdateDestroyAPIView):
     """Manage the authenticated user"""
     serializer_class = UserManageSerializer
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_object(self):
+        """Retrieve and return authentication user"""
+        return self.request.user
+
+
+class ManageUserImageView(generics.RetrieveUpdateAPIView):
+    """Manage the user profile image"""
+    serializer_class = UserImageSerializer
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -36,9 +48,17 @@ class UserProfileView(generics.ListAPIView):
     queryset = User.objects.all()
 
 
-class UserProfileDetailView(generics.RetrieveUpdateAPIView):
+class UserProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
     """Manage users in the database"""
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (UserPermissions,)
     serializer_class = UserProfileDetailSerializer
+    queryset = User.objects.all()
+
+
+class UserProfileImageView(generics.RetrieveUpdateAPIView):
+    """Manage the user profile image"""
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (UserPermissions,)
+    serializer_class = UserImageSerializer
     queryset = User.objects.all()

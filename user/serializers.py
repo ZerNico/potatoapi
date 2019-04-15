@@ -50,7 +50,7 @@ class UserManageSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'id', 'username', 'password', 'first_name', 'last_name',
+            'id', 'username', 'password', 'first_name', 'last_name', 'image',
             'is_staff', 'device', 'country', 'date_joined', 'bio', 'birth_date'
         )
         read_only_fields = ('id', 'date_joined', 'is_staff')
@@ -73,7 +73,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'id', 'username', 'first_name', 'last_name', 'is_staff',
+            'id', 'username', 'first_name', 'last_name', 'image', 'is_staff',
             'device', 'country', 'date_joined'
         )
 
@@ -83,8 +83,16 @@ class UserProfileDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'id', 'username', 'first_name', 'last_name', 'is_staff',
+            'id', 'username', 'first_name', 'last_name', 'image', 'is_staff',
             'device', 'country', 'date_joined', 'bio', 'birth_date'
         )
         read_only_fields = ('id', 'date_joined')
         extra_kwargs = {'birth_date': {'write_only': True, }}
+
+
+class UserImageSerializer(serializers.ModelSerializer):
+    """Serializer for uploading images to recipe"""
+
+    class Meta:
+        model = User
+        fields = ('image',)
