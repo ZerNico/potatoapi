@@ -24,18 +24,23 @@ class Post(models.Model):
         on_delete=models.CASCADE
     )
     title = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(max_length=255, unique=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True)
     body = models.TextField(max_length=2000)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
+    is_published = models.BooleanField(default=False)
     image = models.ImageField(null=True, upload_to=post_image_file_path)
 
     def save(self, *args, **kwargs):
-        """Generate a slug if no custom one is provided"""
-        if not self.slug:
+        """Change values before saving"""
+
+        # generate slug
+        if not self.id:
+            print('test')
+        if not self.slug and not self.id:
             self.slug = slugify(self.title)
 
-        """Resize image and reduce quality"""
+        # Resize image and reduce quality
         previous = Post.objects.filter(id=self.id).first()
         if not previous and self.image or self.image and self.image != previous.image:
             res = 1024
