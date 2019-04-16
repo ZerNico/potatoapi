@@ -1,4 +1,4 @@
-from rest_framework import generics, authentication
+from rest_framework import generics, authentication, filters
 from . import serializers
 from .models import Post
 from .permissions import PostPermissions
@@ -9,6 +9,9 @@ class PostView(generics.ListCreateAPIView):
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (PostPermissions,)
     serializer_class = serializers.PostSerializer
+    filter_backends = (filters.OrderingFilter,)
+    ordering_fields = ('created_date', 'title', 'is_published')
+    ordering = ('-created_date',)
     queryset = Post.objects.all()
 
     def get_queryset(self):
