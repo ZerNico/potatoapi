@@ -23,10 +23,10 @@ class User(AbstractUser):
     birth_date = models.DateField(null=True, blank=True)
     image = models.ImageField(null=True, upload_to=user_image_file_path)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         """Resize image, reduce quality and make it a square"""
         previous = User.objects.filter(id=self.id).first()
-        if not previous and self.image or self.image != previous.image:
+        if not previous and self.image or self.image and self.image != previous.image:
             res = 1024
             ext = self.image.name.split('.')[-1]
             im = Image.open(self.image)
@@ -38,11 +38,14 @@ class User(AbstractUser):
             if ext != 'jpg' or 'jpeg':
                 im = im.convert('RGB')
 
-            im = im.resize((res, res))
+            im = im.resize((res, res), Image.ANTIALIAS)
             im.save(output, format='JPEG', quality=70)
             output.seek(0)
             self.image = InMemoryUploadedFile(
                 output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
                 'image/jpeg', sys.getsizeof(output), None)
 
-        super(User, self).save()
+        super(User, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.username
