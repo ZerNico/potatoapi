@@ -9,8 +9,8 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = (
-            'id', 'user', 'title', 'slug', 'created_date', 'modified_date', 'image', 'is_published',
-            'body'
+            'id', 'user', 'title', 'slug', 'created_date', 'modified_date',
+            'image', 'is_published', 'body'
         )
         read_only_fields = ('id', 'user', 'created_date', 'modified_date')
         extra_kwargs = {
@@ -24,8 +24,8 @@ class PostDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = (
-            'id', 'user',  'title', 'slug', 'created_date', 'modified_date', 'image', 'is_published',
-            'body'
+            'id', 'user',  'title', 'slug', 'created_date', 'modified_date',
+            'image', 'is_published', 'body'
         )
         read_only_fields = ('id', 'created_date', 'modified_date')
         extra_kwargs = {'slug': {'allow_null': True, }}

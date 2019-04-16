@@ -26,7 +26,8 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         """Resize image, reduce quality and make it a square"""
         previous = User.objects.filter(id=self.id).first()
-        if not previous and self.image or self.image and self.image != previous.image:
+        if not previous and self.image or \
+                self.image and self.image != previous.image:
             res = 1024
             ext = self.image.name.split('.')[-1]
             im = Image.open(self.image)

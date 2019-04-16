@@ -12,6 +12,7 @@ djangorestframework = "==3.8.2"
 djongo = "*"
 pillow = "*"
 django-cleanup = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.7"
