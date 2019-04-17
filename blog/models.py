@@ -29,7 +29,8 @@ class Post(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
-    image = models.ImageField(null=True, upload_to=post_image_file_path)
+    image = models.ImageField(null=True, blank=True,
+                              upload_to=post_image_file_path)
 
     def save(self, *args, **kwargs):
         """Change values before saving"""
