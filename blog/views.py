@@ -45,6 +45,17 @@ class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.PostDetailSerializer
     queryset = Post.objects.all()
 
+    def get_queryset(self):
+        """Retrieve only published posts for non staff users"""
+        queryset = self.queryset.all()
+
+        has_permissions = self.request.user.is_active and \
+            self.request.user.is_staff
+        if not has_permissions:
+            queryset = queryset.filter(is_published=True)
+
+        return queryset
+
 
 class PostImageView(generics.RetrieveUpdateDestroyAPIView):
     """Manage the post image"""
