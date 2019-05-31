@@ -13,6 +13,8 @@ djongo = "*"
 pillow = "*"
 django-cleanup = "*"
 django-filter = "*"
+psycopg2 = "*"
+django-environ = "*"
 
 [requires]
 python_version = "3.7"
