@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django_filters',
     'user',
     'blog',
+    'ota',
 ]
 
 MIDDLEWARE = [
@@ -116,6 +117,9 @@ STATIC_ROOT = public_root('static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = public_root('media')
+
+OTA_URL = '/api/downloads'
+OTA_ROOT = public_root('ota')
 
 
 AUTH_USER_MODEL = 'user.User'

@@ -128,3 +128,4 @@ dmypy.json
 # Django files
 media/
 static/
+public/
