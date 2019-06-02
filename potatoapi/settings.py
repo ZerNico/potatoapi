@@ -118,9 +118,11 @@ STATIC_ROOT = public_root('static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = public_root('media')
 
-OTA_URL = '/api/downloads'
+OTA_URL = '/api/ota/downloads'
 OTA_ROOT = public_root('ota')
 
+SF_URL = 'https://sourceforge.net/projects/posp/files/'
+MIRROR_URL = 'https://mirror.potatoproject.co/'
 
 AUTH_USER_MODEL = 'user.User'
 

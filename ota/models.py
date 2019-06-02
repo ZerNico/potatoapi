@@ -19,7 +19,7 @@ def build_file_path(instance, filename):
     path = os.path.join(path, instance.device.lower())
 
     if instance.build_type == 'weekly':
-        path = os.path.join(path, 'weekly/',)
+        path = os.path.join(path, 'weeklies/',)
 
     return os.path.join(path, filename)
 
