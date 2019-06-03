@@ -6,6 +6,8 @@ class BuildPermissions(BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method in SAFE_METHODS:
             return True
+        elif request.method in ('PUT', 'PATCH'):
+            return False
         return request.user.is_staff or \
             obj.user == request.user and \
             request.user.is_maintainer
