@@ -21,6 +21,7 @@ class User(AbstractUser):
     bio = models.TextField(max_length=500, blank=True)
     country = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
+    is_maintainer = models.BooleanField(default=False)
     image = models.ImageField(null=True, upload_to=user_image_file_path)
 
     def save(self, *args, **kwargs):
