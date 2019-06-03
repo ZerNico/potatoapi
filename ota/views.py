@@ -51,13 +51,14 @@ def sf_redirect(request, device, filename):
 def mirror_redirect(request, device, filename):
     Build.objects.filter(filename=filename).update(downloads=F('downloads')+1)
 
-    response = redirect(f'{settings.MIRROR_URL}__private__/{device}/{filename}')
+    response = redirect(
+        f'{settings.MIRROR_URL}__private__/{device}/{filename}')
     return response
 
 
 def mirror_weekly_redirect(request, device, filename):
     Build.objects.filter(filename=filename).update(downloads=F('downloads')+1)
 
-    response = redirect(f'{settings.MIRROR_URL}__private__/{device}/weeklies/{filename}')
+    response = redirect(
+        f'{settings.MIRROR_URL}__private__/{device}/weeklies/{filename}')
     return response
-

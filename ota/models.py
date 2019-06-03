@@ -16,7 +16,7 @@ def build_file_path(instance, filename):
     if instance.private:
         path = os.path.join('__private__',)
 
-    path = os.path.join(path, instance.device.lower())
+    path = os.path.join(path, instance.device)
 
     if instance.build_type == 'weekly':
         path = os.path.join(path, 'weeklies/',)
@@ -66,7 +66,7 @@ class Build(models.Model):
         if not build_date and not self.build_date:
             raise ValidationError(u'Timestamp not found')
 
-        device = re.search(r"ro\.product\.device=(.*?)\\n", str(buildprop))
+        device = re.search(r"ro\.potato\.device=(.*?)\\n", str(buildprop))
 
         if not device and not self.device:
             raise ValidationError(u'Device name not found')
@@ -96,7 +96,7 @@ class Build(models.Model):
             self.build_date = build_date.group(1)
 
         if not self.device:
-            device = re.search(r"ro\.product\.device=(.*?)\\n", str(buildprop))
+            device = re.search(r"ro\.potato\.device=(.*?)\\n", str(buildprop))
             self.device = device.group(1)
 
         if not self.version:
