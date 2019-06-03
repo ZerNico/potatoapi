@@ -7,9 +7,8 @@ verify_ssl = true
 flake8 = "*"
 
 [packages]
-django = "==2.1.8"
-djangorestframework = "==3.8.2"
-djongo = "*"
+django = "==2.2.2"
+djangorestframework = "==3.9.4"
 pillow = "*"
 django-cleanup = "*"
 django-filter = "*"
