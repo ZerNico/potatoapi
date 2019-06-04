@@ -119,12 +119,12 @@ class Build(models.Model):
             build_type = re.search(
                 r"ro\.potato\.type=(.*?)\\n", str(buildprop))
             self.build_type = build_type.group(1)
+        if not self.id:
+            self.filename = self.build.name
 
-        self.filename = self.build.name
+            self.size = self.build.size
 
-        self.size = self.build.size
-
-        self.md5 = calculate_md5(self.build)
+            self.md5 = calculate_md5(self.build)
 
         super(Build, self).save(*args, **kwargs)
 
