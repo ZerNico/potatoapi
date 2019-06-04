@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 import os
 import zipfile
 import re
+import hashlib
 
 ota_storage = FileSystemStorage(
     location=settings.OTA_ROOT, base_url=settings.OTA_URL)
@@ -29,6 +30,15 @@ def validate_file_extension(value):
         raise ValidationError(u'Only zip files are allowed')
 
 
+def calculate_md5(file):
+    if not file:
+        return None
+    md5 = hashlib.md5()
+    for chunk in file.chunks():
+        md5.update(chunk)
+    return md5.hexdigest()
+
+
 class Build(models.Model):
     """Build object"""
     user = models.ForeignKey(
@@ -46,6 +56,7 @@ class Build(models.Model):
     device = models.CharField(max_length=32)
     downloads = models.IntegerField(default=0)
     filename = models.CharField(max_length=128, unique=True)
+    md5 = models.CharField(max_length=64)
     private = models.BooleanField(default=False)
     size = models.IntegerField()
     version = models.CharField(max_length=32)
@@ -112,6 +123,8 @@ class Build(models.Model):
         self.filename = self.build.name
 
         self.size = self.build.size
+
+        self.md5 = calculate_md5(self.build)
 
         super(Build, self).save(*args, **kwargs)
 

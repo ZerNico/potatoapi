@@ -10,9 +10,11 @@ class BuildSerializer(serializers.ModelSerializer):
         model = Build
         fields = (
             'id', 'user', 'build', 'build_date', 'build_type', 'device',
-            'downloads', 'filename', 'private', 'size', 'version'
+            'downloads', 'filename', 'md5', 'private', 'size', 'version'
         )
-        read_only_fields = ('id', 'filename', 'size', 'user', 'downloads')
+        read_only_fields = (
+            'id', 'filename', 'md5', 'size', 'user', 'downloads'
+        )
         extra_kwargs = {
             'build_date': {'allow_null': True, },
             'build_type': {'allow_null': True, },
@@ -32,9 +34,9 @@ class BuildDetailSerializer(serializers.ModelSerializer):
         model = Build
         fields = (
             'id', 'user', 'build', 'build_date', 'build_type', 'device',
-            'downloads', 'filename', 'private', 'size', 'version'
+            'downloads', 'filename', 'md5', 'private', 'size', 'version'
         )
         read_only_fields = (
-            'id', 'user', 'build', 'filename', 'private', 'size'
+            'id', 'user', 'build', 'filename', 'md5', 'private', 'size'
         )
     user = UserProfileDetailSerializer(read_only=True, )
