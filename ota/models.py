@@ -8,6 +8,8 @@ import zipfile
 import re
 import hashlib
 
+import buildprop_utils
+
 ota_storage = FileSystemStorage(
     location=settings.OTA_ROOT, base_url=settings.OTA_URL)
 
@@ -70,24 +72,25 @@ class Build(models.Model):
             buildprop = buildzip.read('system/build.prop')
         except KeyError:
             raise ValidationError(u'Provide a rom zip')
+        
+        buildprop_str = str(buildprop)
 
-        build_date = re.search(
-            r"ro.build.date.utc=([0-9]{10})", str(buildprop))
+        build_date = buildprop_utils.searchForProp("ro.build.date.utc", buildprop_str)
 
         if not build_date and not self.build_date:
             raise ValidationError(u'Timestamp not found')
 
-        device = re.search(r"ro\.potato\.device=(.*?)\\n", str(buildprop))
+        device = buildprop_utils.searchForProp("ro.potato.device", buildprop_str)
 
         if not device and not self.device:
             raise ValidationError(u'Device name not found')
 
-        version = re.search(r"ro\.potato\.version=(.*?)\\n", str(buildprop))
+        version = buildprop_utils.searchForProp("ro.potato.version", buildprop_str)
 
         if not version and not self.version:
             raise ValidationError(u'Version not found')
 
-        build_type = re.search(r"ro\.potato\.type=(.*?)\\n", str(buildprop))
+        build_type = buildprop_utils.searchForProp("ro.potato.type", buildprop_str)
 
         if not build_type and not self.build_type:
             raise ValidationError(u'Build type not found')
@@ -100,24 +103,22 @@ class Build(models.Model):
         buildzip = zipfile.ZipFile(self.build)
 
         buildprop = buildzip.read('system/build.prop')
+        buildprop_str = str(buildprop)
 
         if not self.build_date:
-            build_date = re.search(
-                r"ro.build.date.utc=([0-9]{10})", str(buildprop))
+            build_date = buildprop_utils.searchForProp("ro.build.date.utc", buildprop_str)
             self.build_date = build_date.group(1)
 
         if not self.device:
-            device = re.search(r"ro\.potato\.device=(.*?)\\n", str(buildprop))
+            device = buildprop_utils.searchForProp("ro.potato.device", buildprop_str)
             self.device = device.group(1)
 
         if not self.version:
-            version = re.search(
-                r"ro\.potato\.version=(.*?)\\n", str(buildprop))
+            version = buildprop_utils.searchForProp("ro.potato.version", buildprop_str)
             self.version = version.group(1)
 
         if not self.build_type:
-            build_type = re.search(
-                r"ro\.potato\.type=(.*?)\\n", str(buildprop))
+            build_type = buildprop_utils.searchForProp("ro.potato.type", buildprop_str)
             self.build_type = build_type.group(1)
         if not self.id:
             self.filename = self.build.name
