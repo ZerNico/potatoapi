@@ -20,4 +20,3 @@ class BuildPermissions(BasePermission):
         elif request.user.is_active:
             return request.user.is_staff or \
                 request.user.is_maintainer
-

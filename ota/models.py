@@ -5,10 +5,8 @@ from django.core.exceptions import ValidationError
 
 import os
 import zipfile
-import re
-import hashlib
 
-from . import buildprop_utils
+from .utils import calculate_md5, clean_buildprop, search_for_prop
 
 ota_storage = FileSystemStorage(
     location=settings.OTA_ROOT, base_url=settings.OTA_URL)
@@ -30,15 +28,6 @@ def build_file_path(instance, filename):
 def validate_file_extension(value):
     if not value.name.endswith('.zip'):
         raise ValidationError(u'Only zip files are allowed')
-
-
-def calculate_md5(file):
-    if not file:
-        return None
-    md5 = hashlib.md5()
-    for chunk in file.chunks():
-        md5.update(chunk)
-    return md5.hexdigest()
 
 
 class Build(models.Model):
@@ -72,25 +61,25 @@ class Build(models.Model):
             buildprop = buildzip.read('system/build.prop')
         except KeyError:
             raise ValidationError(u'Provide a rom zip')
-        
-        buildprop_clean = buildprop_utils.cleanBuildProp(str(buildprop, "utf-8"))
 
-        build_date = buildprop_utils.searchForProp(buildprop_clean, "ro.build.date.utc")
+        buildprop_clean = clean_buildprop(str(buildprop, "utf-8"))
+
+        build_date = search_for_prop(buildprop_clean, "ro.build.date.utc")
 
         if not build_date and not self.build_date:
             raise ValidationError(u'Timestamp not found')
 
-        device = buildprop_utils.searchForProp(buildprop_clean, "ro.potato.device")
+        device = search_for_prop(buildprop_clean, "ro.potato.device")
 
         if not device and not self.device:
             raise ValidationError(u'Device name not found')
 
-        version = buildprop_utils.searchForProp(buildprop_clean, "ro.potato.version")
+        version = search_for_prop(buildprop_clean, "ro.potato.version")
 
         if not version and not self.version:
             raise ValidationError(u'Version not found')
 
-        build_type = buildprop_utils.searchForProp(buildprop_clean, "ro.potato.type")
+        build_type = search_for_prop(buildprop_clean, "ro.potato.type")
 
         if not build_type and not self.build_type:
             raise ValidationError(u'Build type not found')
@@ -103,22 +92,22 @@ class Build(models.Model):
         buildzip = zipfile.ZipFile(self.build)
 
         buildprop = buildzip.read('system/build.prop')
-        buildprop_clean = buildprop_utils.cleanBuildProp(str(buildprop, "utf-8"))
+        buildprop_clean = clean_buildprop(str(buildprop, "utf-8"))
 
         if not self.build_date:
-            build_date = buildprop_utils.searchForProp(buildprop_clean, "ro.build.date.utc")
+            build_date = search_for_prop(buildprop_clean, "ro.build.date.utc")
             self.build_date = build_date
 
         if not self.device:
-            device = buildprop_utils.searchForProp(buildprop_clean, "ro.potato.device")
+            device = search_for_prop(buildprop_clean, "ro.potato.device")
             self.device = device
 
         if not self.version:
-            version = buildprop_utils.searchForProp(buildprop_clean, "ro.potato.version")
+            version = search_for_prop(buildprop_clean, "ro.potato.version")
             self.version = version
 
         if not self.build_type:
-            build_type = buildprop_utils.searchForProp(buildprop_clean, "ro.potato.type")
+            build_type = search_for_prop(buildprop_clean, "ro.potato.type")
             self.build_type = build_type
         if not self.id:
             self.filename = self.build.name

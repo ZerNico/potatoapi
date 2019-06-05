@@ -22,7 +22,11 @@ class User(AbstractUser):
     country = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     is_maintainer = models.BooleanField(default=False)
-    image = models.ImageField(null=True, blank=True, upload_to=user_image_file_path)
+    image = models.ImageField(
+        null=True,
+        blank=True,
+        upload_to=user_image_file_path
+    )
 
     def save(self, *args, **kwargs):
         """Resize image, reduce quality and make it a square"""
