@@ -1,7 +1,4 @@
 def searchForProp(buildprop, prop):
-
-    print("Also: " + str(type(buildprop)))
-    
     for prop_to_check in buildprop:
         current_prop = prop_to_check.split("=")
         
