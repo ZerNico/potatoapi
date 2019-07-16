@@ -10,7 +10,8 @@ class BuildSerializer(serializers.ModelSerializer):
         model = Build
         fields = (
             'id', 'user', 'build', 'build_date', 'build_type', 'device',
-            'downloads', 'filename', 'md5', 'private', 'size', 'version'
+            'downloads', 'filename', 'md5', 'notes', 'private', 'size',
+            'version'
         )
         read_only_fields = (
             'id', 'filename', 'md5', 'size', 'user', 'downloads'
@@ -19,6 +20,7 @@ class BuildSerializer(serializers.ModelSerializer):
             'build_date': {'allow_null': True, },
             'build_type': {'allow_null': True, },
             'device': {'allow_null': True, },
+            'notes': {'allow_null': True, },
             'version': {'allow_null': True, }
         }
 
@@ -34,7 +36,8 @@ class BuildDetailSerializer(serializers.ModelSerializer):
         model = Build
         fields = (
             'id', 'user', 'build', 'build_date', 'build_type', 'device',
-            'downloads', 'filename', 'md5', 'private', 'size', 'version'
+            'downloads', 'filename', 'md5', 'notes', 'private', 'size',
+            'version'
         )
         read_only_fields = (
             'id', 'user', 'build', 'filename', 'md5', 'private', 'size'
