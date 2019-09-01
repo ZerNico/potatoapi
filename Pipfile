@@ -7,13 +7,15 @@ verify_ssl = true
 flake8 = "*"
 
 [packages]
-django = "==2.2.2"
-djangorestframework = "==3.9.4"
+django = "==2.2.4"
+djangorestframework = "==3.10.2"
 pillow = "*"
 django-cleanup = "*"
 django-filter = "*"
 psycopg2 = "*"
 django-environ = "*"
+django-cors-headers = "==3.1.0"
+flake8 = "==3.7.8"
 
 [requires]
 python_version = "3.7"
