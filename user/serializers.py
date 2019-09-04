@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('username', 'email', 'password')
-        extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
+        extra_kwargs = {'password': {'write_only': True, 'min_length': 8}}
 
     def create(self, validated_data):
         """Create a new user with encrypted password and return it"""
@@ -54,7 +54,7 @@ class UserManageSerializer(serializers.ModelSerializer):
             'is_staff', 'device', 'country', 'date_joined', 'bio', 'birth_date'
         )
         read_only_fields = ('id', 'date_joined', 'is_staff')
-        extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
+        extra_kwargs = {'password': {'write_only': True, 'min_length': 8}}
 
     def update(self, instance, validated_data):
         """Update a user, setting the password correctly and return it"""
