@@ -12,7 +12,7 @@ RUN apk add --update --no-cache --virtual .tmp-build-deps \
 RUN mkdir /app
 WORKDIR /app
 COPY . /app
-RUN pip install pipenv uwsgi django pipenv-to-requirements
+RUN pip install pipenv gunicorn django pipenv-to-requirements
 RUN pipenv run pipenv_to_requirements
 RUN pip install -r requirements.txt
 #RUN pipenv install
