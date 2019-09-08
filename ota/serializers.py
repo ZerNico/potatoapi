@@ -17,11 +17,11 @@ class BuildSerializer(serializers.ModelSerializer):
             'id', 'filename', 'md5', 'size', 'user', 'downloads'
         )
         extra_kwargs = {
-            'build_date': {'allow_null': True, },
-            'build_type': {'allow_null': True, },
-            'device': {'allow_null': True, },
-            'notes': {'allow_null': True, },
-            'version': {'allow_null': True, }
+            'build_date': {'allow_null': True, 'required': False},
+            'build_type': {'allow_null': True, 'required': False},
+            'device': {'allow_null': True, 'required': False},
+            'notes': {'allow_null': True, 'required': False},
+            'version': {'allow_null': True, 'required': False}
         }
 
     def validate(self, attrs):

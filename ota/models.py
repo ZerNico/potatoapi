@@ -48,7 +48,7 @@ class Build(models.Model):
     downloads = models.IntegerField(default=0)
     filename = models.CharField(max_length=128, unique=True)
     md5 = models.CharField(max_length=64)
-    notes = models.TextField(max_length=256, null=True)
+    notes = models.TextField(max_length=256, null=True, blank=True)
     private = models.BooleanField(default=False)
     size = models.IntegerField()
     version = models.CharField(max_length=32)
