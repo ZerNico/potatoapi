@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  potatoapi:
+  api:
     build: .
     restart: always
     depends_on:
@@ -23,7 +23,7 @@ services:
     image: 'postgres:11-alpine'
     restart: always
     volumes:
-      - potatobot_data:/var/lib/postgresql/data/
+      - db_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_DB=potatoapi
       - POSTGRES_USER
@@ -32,6 +32,6 @@ services:
       - potatoapi
 
 volumes:
-  potatobot_data:
+  db_data:
 networks:
   potatoapi:
