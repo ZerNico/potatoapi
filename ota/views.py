@@ -34,31 +34,31 @@ class BuildDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Build.objects.all()
 
 
-def sf_weekly_redirect(request, device, filename):
+def sf_weekly_redirect(request, device, dish, filename):
     Build.objects.filter(filename=filename).update(downloads=F('downloads')+1)
 
-    response = redirect(f'{settings.SF_URL}{device}/weeklies/{filename}')
+    response = redirect(f'{settings.SF_URL}{device}/{dish}/weeklies/{filename}')
     return response
 
 
-def sf_redirect(request, device, filename):
+def sf_redirect(request, device, dish, filename):
     Build.objects.filter(filename=filename).update(downloads=F('downloads')+1)
 
-    response = redirect(f'{settings.SF_URL}{device}/{filename}')
+    response = redirect(f'{settings.SF_URL}{device}/{dish}/{filename}')
     return response
 
 
-def mirror_redirect(request, device, filename):
+def mirror_redirect(request, device, dish, filename):
     Build.objects.filter(filename=filename).update(downloads=F('downloads')+1)
 
     response = redirect(
-        f'{settings.MIRROR_URL}__private__/{device}/{filename}')
+        f'{settings.MIRROR_URL}__private__/{device}/{dish}/{filename}')
     return response
 
 
-def mirror_weekly_redirect(request, device, filename):
+def mirror_weekly_redirect(request, device, dish, filename):
     Build.objects.filter(filename=filename).update(downloads=F('downloads')+1)
 
     response = redirect(
-        f'{settings.MIRROR_URL}__private__/{device}/weeklies/{filename}')
+        f'{settings.MIRROR_URL}__private__/{device}/{dish}/weeklies/{filename}')
     return response

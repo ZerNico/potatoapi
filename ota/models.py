@@ -2,13 +2,22 @@ from django.db import models
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.utils.deconstruct import deconstructible
 
 import os
 import zipfile
 
 from .utils import calculate_md5, clean_buildprop, search_for_prop
 
-ota_storage = FileSystemStorage(
+
+@deconstructible
+class CustomFileSystemStorage(FileSystemStorage):
+
+    def get_valid_name(self, name):
+        return name
+
+
+ota_storage = CustomFileSystemStorage(
     location=settings.OTA_ROOT, base_url=settings.OTA_URL)
 
 
@@ -18,6 +27,7 @@ def build_file_path(instance, filename):
         path = os.path.join('__private__',)
 
     path = os.path.join(path, instance.device)
+    path = os.path.join(path, instance.dish.lower())
 
     if instance.build_type == 'weekly':
         path = os.path.join(path, 'weeklies/',)
@@ -45,6 +55,7 @@ class Build(models.Model):
     build_date = models.IntegerField()
     build_type = models.CharField(max_length=32)
     device = models.CharField(max_length=32)
+    dish = models.CharField(max_length=32)
     downloads = models.IntegerField(default=0)
     filename = models.CharField(max_length=128, unique=True)
     md5 = models.CharField(max_length=64)
@@ -85,6 +96,11 @@ class Build(models.Model):
         if not build_type and not self.build_type:
             raise ValidationError(u'Build type not found')
 
+        dish = search_for_prop(buildprop_clean, "ro.potato.dish")
+
+        if not dish and not self.dish:
+            raise ValidationError(u'Dish not found')
+
         if Build.objects.filter(filename=self.build.name).exists():
             raise ValidationError(u'Build already exists')
 
@@ -110,6 +126,11 @@ class Build(models.Model):
         if not self.build_type:
             build_type = search_for_prop(buildprop_clean, "ro.potato.type")
             self.build_type = build_type
+
+        if not self.dish:
+            dish = search_for_prop(buildprop_clean, "ro.potato.dish")
+            self.dish = dish
+
         if not self.id:
             self.filename = self.build.name
 
