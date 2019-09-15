@@ -18,7 +18,6 @@ services:
     volumes:
       - /home/potato/potatoapi/public:/app/public
 
-
   db:
     image: 'postgres:11-alpine'
     restart: always
@@ -30,6 +29,15 @@ services:
       - POSTGRES_PASSWORD
     networks:
       - potatoapi
+
+  rsync:
+    build: ./rsync
+    restart: always
+    depends_on:
+      - api
+    env_file: .env
+    volumes:
+      - /home/potato/potatoapi/public/ota:/public
 
 volumes:
   db_data:
