@@ -14,5 +14,5 @@ class BuildFilter(filters.FilterSet):
     class Meta:
         model = Build
         fields = [
-            'build_type', 'device', 'private', 'version', 'user', 'size'
+            'build_type', 'device', 'dish', 'version', 'user', 'size'
         ]

@@ -5,11 +5,11 @@ from . import models
 
 class BuildAdmin(admin.ModelAdmin):
     list_display = [
-        'filename', 'device', 'build_date', 'build_type', 'version', 'private',
+        'filename', 'device', 'dish', 'build_date', 'build_type', 'version',
         'user'
     ]
     search_fields = [
-        'filename', 'device', 'build_date', 'build_type', 'version', 'private',
+        'filename', 'device', 'dish', 'build_date', 'build_type', 'version',
     ]
 
 
