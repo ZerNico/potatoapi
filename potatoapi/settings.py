@@ -18,17 +18,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['127.0.0.1', '95.216.9.122', 'apibeta.potatoproject.co']
-
-
-# Django settings for production
-
-SECURE_HSTS_SECONDS = 60
-SECURE_HSTS_PRELOAD = False
-SECURE_BROWSER_XSS_FILTER = False
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-X_FRAME_OPTIONS = 'ALLOW'
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', 'api.potatoproject.co']
 
 # Application definition
 
