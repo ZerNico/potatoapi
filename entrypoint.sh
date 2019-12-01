@@ -3,6 +3,8 @@
 # waits for db to start
 /wait
 
+sleep 10
+
 # migrations
 python manage.py makemigrations
 python manage.py migrate
