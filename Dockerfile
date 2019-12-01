@@ -24,7 +24,7 @@ RUN chmod +x /wait
 
 # Create user for execution
 RUN adduser -D user
-RUN chmod +x /app/entrypoint.sh && chown user:user /app
+RUN chmod +x /app/entrypoint.sh && chown user:user -R /app
 USER user
 
 ENTRYPOINT ["sh", "entrypoint.sh"]
