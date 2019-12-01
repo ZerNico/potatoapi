@@ -113,17 +113,11 @@ USE_TZ = True
 
 public_root = root.path('public/')
 
-STATIC_URL = '/static/'
+STATIC_URL = '/public/static/'
 STATIC_ROOT = public_root('static')
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/public/media/'
 MEDIA_ROOT = public_root('media')
-
-OTA_URL = '/api/ota/downloads'
-OTA_ROOT = public_root('ota')
-
-SF_URL = 'https://sourceforge.net/projects/posp/files/'
-MIRROR_URL = 'https://mirror.potatoproject.co/'
 
 AUTH_USER_MODEL = 'user.User'
 
