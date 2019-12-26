@@ -29,3 +29,8 @@ class BuildDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (BuildPermissions,)
     serializer_class = serializers.BuildDetailSerializer
     queryset = Build.objects.all()
+
+
+class BuildDetailHashView(BuildDetailView):
+    serializer_class = serializers.BuildDetailHashSerializer
+    lookup_field = 'md5'

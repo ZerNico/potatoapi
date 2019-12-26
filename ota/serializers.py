@@ -31,3 +31,7 @@ class BuildDetailSerializer(serializers.ModelSerializer):
             'id', 'user'
         )
     user = UserProfileDetailSerializer(read_only=True, )
+
+
+class BuildDetailHashSerializer(BuildDetailSerializer):
+    lookup_field = 'md5'
