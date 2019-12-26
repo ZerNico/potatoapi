@@ -10,8 +10,8 @@ urlpatterns = [
     path('me/', views.ManageUserView.as_view(), name='me'),
     path('me/upload-image/', views.ManageUserImageView.as_view(),
          name='meimage'),
-    path('profile/<pk>/', views.UserProfileDetailView.as_view(),
+    path('profile/<username>/', views.UserProfileDetailView.as_view(),
          name='profiledetail'),
-    path('profile/<pk>/upload-image/', views.UserProfileImageView.as_view(),
+    path('profile/<username>/upload-image/', views.UserProfileImageView.as_view(),
          name='profileimage'),
 ]

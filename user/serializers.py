@@ -73,11 +73,11 @@ class UserProfileDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'id', 'username', 'first_name', 'last_name', 'image', 'is_staff',
-            'device', 'country', 'date_joined', 'bio', 'birth_date'
+            'username', 'first_name', 'last_name', 'image', 'is_staff',
+            'device', 'country', 'bio'
         )
-        read_only_fields = ('id', 'date_joined')
         extra_kwargs = {'birth_date': {'write_only': True, }}
+        lookup_field = 'username'
 
 
 class UserImageSerializer(serializers.ModelSerializer):
@@ -86,3 +86,4 @@ class UserImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('image',)
+        lookup_field = 'username'

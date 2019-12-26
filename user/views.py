@@ -46,6 +46,7 @@ class UserProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (UserPermissions,)
     serializer_class = serializers.UserProfileDetailSerializer
     queryset = User.objects.all()
+    lookup_field = 'username'
 
 
 class UserProfileImageView(generics.RetrieveUpdateAPIView):
@@ -54,3 +55,4 @@ class UserProfileImageView(generics.RetrieveUpdateAPIView):
     permission_classes = (UserPermissions,)
     serializer_class = serializers.UserImageSerializer
     queryset = User.objects.all()
+    lookup_field = 'username'
