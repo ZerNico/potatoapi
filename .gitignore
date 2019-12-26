@@ -129,5 +129,3 @@ dmypy.json
 media/
 static/
 public/
-migrations/
-!migrations/__init__.py
