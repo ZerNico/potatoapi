@@ -68,16 +68,6 @@ class UserManageSerializer(serializers.ModelSerializer):
         return user
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
-    """Serializer for the user list"""
-    class Meta:
-        model = User
-        fields = (
-            'id', 'username', 'first_name', 'last_name', 'image', 'is_staff',
-            'device', 'country', 'date_joined'
-        )
-
-
 class UserProfileDetailSerializer(serializers.ModelSerializer):
     """Serializer for the user details"""
     class Meta:

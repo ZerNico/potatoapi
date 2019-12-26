@@ -40,12 +40,6 @@ class ManageUserImageView(generics.RetrieveUpdateAPIView):
         return self.request.user
 
 
-class UserProfileView(generics.ListAPIView):
-    """Display all the users"""
-    serializer_class = serializers.UserProfileSerializer
-    queryset = User.objects.all()
-
-
 class UserProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
     """Manage users in the database"""
     authentication_classes = (authentication.TokenAuthentication,)
