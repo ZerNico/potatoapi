@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Build
+from .models import Build, Note
 from user.serializers import UserProfileDetailSerializer
 
 
@@ -35,3 +35,30 @@ class BuildDetailSerializer(serializers.ModelSerializer):
 
 class BuildDetailHashSerializer(BuildDetailSerializer):
     lookup_field = 'md5'
+
+
+class NoteSerializer(serializers.ModelSerializer):
+    """Serializer for the build list"""
+    class Meta:
+        model = Note
+        fields = (
+            'id', 'user', 'device', 'text'
+        )
+        read_only_fields = (
+            'id', 'user'
+        )
+
+
+class NoteDetailSerializer(serializers.ModelSerializer):
+    """Serializer for the note details"""
+    class Meta:
+        model = Note
+        fields = (
+            'id', 'user', 'device', 'text'
+        )
+        read_only_fields = (
+            'id', 'user'
+        )
+
+    lookup_field = 'device'
+    user = UserProfileDetailSerializer(read_only=True, )

@@ -16,7 +16,7 @@ class Build(models.Model):
     downloads = models.IntegerField(default=0)
     filename = models.CharField(max_length=128)
     md5 = models.CharField(max_length=64, unique=True)
-    notes = models.TextField(max_length=256, null=True, blank=True)
+    notes = models.TextField(max_length=8192, null=True, blank=True)
     size = models.IntegerField()
     url = models.CharField(max_length=256)
     version = models.CharField(max_length=32)
@@ -24,3 +24,17 @@ class Build(models.Model):
 
     def __str__(self):
         return self.filename
+
+
+class Note(models.Model):
+    """Note object"""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    text = models.TextField(max_length=8192)
+    device = models.CharField(max_length=32, unique=True)
+
+    def __str__(self):
+        return self.device
