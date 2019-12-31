@@ -5,10 +5,10 @@ from user import models
 
 class UserAdmin(admin.ModelAdmin):
     list_display = [
-        'username', 'is_staff', 'is_maintainer', 'email', 'date_joined',
-        'country', 'device'
+        'username', 'is_superuser', 'is_maintainer', 'email', 'date_joined',
+        'country', 'device', 'is_staff'
     ]
-    list_filter = ['is_staff', 'date_joined']
+    list_filter = ['is_superuser', 'is_maintainer', 'is_staff', 'date_joined']
     search_fields = ['username', 'email', 'country', 'device']
 
 

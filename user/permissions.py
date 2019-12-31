@@ -7,7 +7,5 @@ class UserPermissions(BasePermission):
 
         if request.method in SAFE_METHODS:
             return True
-        else:
-            return request.user.is_authenticated and \
-                   request.user.is_staff and \
-                   request.user.is_active
+        elif request.user.is_active:
+            return request.user.is_staff
