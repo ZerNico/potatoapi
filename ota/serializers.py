@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Build, Note
+from .models import Build, Note, Changelog
 from user.serializers import UserProfileDetailSerializer
 
 
@@ -62,3 +62,30 @@ class NoteDetailSerializer(serializers.ModelSerializer):
 
     lookup_field = 'device'
     user = UserProfileDetailSerializer(read_only=True, )
+
+
+class ChangelogSerializer(serializers.ModelSerializer):
+    """Serializer for the build list"""
+    class Meta:
+        model = Changelog
+        fields = (
+            'id', 'changelog', 'version', 'android_version', 'date'
+        )
+        read_only_fields = ('id',)
+        extra_kwargs = {
+            'changelog': {'write_only': True}
+        }
+
+
+class ChangelogDetailSerializer(serializers.ModelSerializer):
+    """Serializer for the note details"""
+    class Meta:
+        model = Changelog
+        fields = (
+            'id', 'changelog', 'version', 'android_version', 'date'
+        )
+        read_only_fields = (
+            'id', 'user'
+        )
+
+    lookup_field = 'version'

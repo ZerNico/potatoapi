@@ -3,7 +3,7 @@ from django_filters import rest_framework as filters2
 
 from . import serializers
 from .filters import BuildFilter
-from .models import Build, Note
+from .models import Build, Note, Changelog
 from .permissions import BuildPermissions
 
 
@@ -55,3 +55,27 @@ class NoteDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.NoteDetailSerializer
     queryset = Note.objects.all()
     lookup_field = 'device'
+
+
+class ChangelogView(generics.ListCreateAPIView):
+    """List every changelog"""
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (BuildPermissions,)
+    filter_backends = (filters.OrderingFilter,)
+    ordering_fields = ('version',)
+    ordering = ('-version',)
+    serializer_class = serializers.ChangelogSerializer
+    queryset = Changelog.objects.all()
+
+    def perform_create(self, serializer):
+        """Create a new changelog"""
+        serializer.save(user=self.request.user)
+
+
+class ChangelogDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """Show changelog details"""
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (BuildPermissions,)
+    serializer_class = serializers.ChangelogDetailSerializer
+    queryset = Changelog.objects.all()
+    lookup_field = 'version'

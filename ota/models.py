@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.postgres.fields import ArrayField
 
 
 class Build(models.Model):
@@ -38,3 +39,19 @@ class Note(models.Model):
 
     def __str__(self):
         return self.device
+
+
+class Changelog(models.Model):
+    """Note object"""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    changelog = ArrayField(models.CharField(max_length=1024))
+    version = models.CharField(max_length=32, unique=True)
+    android_version = models.CharField(max_length=32)
+    date = models.DateField()
+
+    def __str__(self):
+        return self.version

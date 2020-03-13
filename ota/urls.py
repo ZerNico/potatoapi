@@ -11,4 +11,7 @@ urlpatterns = [
     path('builds/<pk>/', views.BuildDetailView.as_view(), name='builddetail'),
     path('notes/', views.NoteView.as_view(), name='note'),
     path('notes/<device>/', views.NoteDetailView.as_view(), name='notedetail'),
+    path('changelog/', views.ChangelogView.as_view(), name='changelog'),
+    path('changelog/<version>/', views.ChangelogDetailView.as_view(),
+         name='changelogdetail'),
 ]
