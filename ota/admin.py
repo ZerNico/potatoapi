@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django_better_admin_arrayfield.admin.mixins import DynamicArrayMixin
 
 from . import models
 
@@ -22,7 +23,7 @@ class NoteAdmin(admin.ModelAdmin):
     ]
 
 
-class ChangelogAdmin(admin.ModelAdmin):
+class ChangelogAdmin(admin.ModelAdmin, DynamicArrayMixin):
     list_display = [
         'version', 'android_version', 'date', 'user'
     ]

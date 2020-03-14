@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.postgres.fields import ArrayField
+from django_better_admin_arrayfield.models.fields import ArrayField
 
 
 class Build(models.Model):

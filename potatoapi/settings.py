@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_cleanup.apps.CleanupConfig',
+    'django_better_admin_arrayfield',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
