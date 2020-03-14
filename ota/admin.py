@@ -22,5 +22,16 @@ class NoteAdmin(admin.ModelAdmin):
     ]
 
 
+class ChangelogAdmin(admin.ModelAdmin):
+    list_display = [
+        'version', 'android_version', 'date', 'user'
+    ]
+    search_fields = [
+        'version', 'android_version', 'date'
+    ]
+    list_filter = ['date', ]
+
+
 admin.site.register(models.Build, BuildAdmin)
 admin.site.register(models.Note, NoteAdmin)
+admin.site.register(models.Changelog, ChangelogAdmin)
