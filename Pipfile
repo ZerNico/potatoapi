@@ -9,7 +9,7 @@ flake8 = "*"
 [packages]
 django = "==3.0.4"
 djangorestframework = "==3.11.0"
-pillow = "==7.0.0"
+pillow = "==8.2.0"
 django-cleanup = "*"
 django-filter = "*"
 psycopg2 = "*"
